@@ -20,9 +20,9 @@ namespace Infrastructure.Configuration
             builder.Property(x => x.Nombre).HasColumnName("Nombre").HasColumnType("varchar").HasMaxLength(500).IsRequired();
             builder.Property(x => x.Apellido).HasColumnName("Apellido").HasColumnType("varchar").HasMaxLength(500).IsRequired();
             builder.Property(x => x.FechaNacimiento).HasColumnName("FechaNacimiento").HasColumnType("datetime").IsRequired();
-            builder.Property(x => x.Cuit).HasColumnName("Cuit").HasColumnType("varchar").HasMaxLength(100).IsRequired();
+            builder.Property(x => x.Cuit).HasColumnName("CUIT").HasColumnType("varchar").HasMaxLength(100).IsRequired();
             builder.Property(x => x.Domicilio).HasColumnName("Domicilio").HasColumnType("varchar").HasMaxLength(500).IsRequired();
-            builder.Property(x => x.Telefono).HasColumnName("Telefono").HasColumnType("varchar").HasMaxLength(500).IsRequired();
+            builder.Property(x => x.Telefono).HasColumnName("TelefonoCelular").HasColumnType("varchar").HasMaxLength(500).IsRequired();
             builder.Property(x => x.Email).HasColumnName("Email").HasColumnType("varchar").HasMaxLength(500).IsRequired();
         }
     }
