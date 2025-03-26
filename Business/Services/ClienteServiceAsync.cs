@@ -33,6 +33,8 @@ namespace Business.Services
                 ).ToListAsync();
             }
 
+             clientes = clientes.Where(x => x.Estado == true).ToList();
+
             return clientes;
         }
         public async Task<Cliente> Obtener(int id)
@@ -44,6 +46,7 @@ namespace Business.Services
         public async Task<string> Insert(Cliente cliente)
         {
             await ValidarInsertCliente(cliente);
+            cliente.Estado = true;
             await _ApplicationDbContext.AddAsync(cliente);
             await _ApplicationDbContext.SaveChangesAsync();
             return "";
@@ -61,6 +64,14 @@ namespace Business.Services
             clienteNew.Telefono  = cliente.Telefono;
             clienteNew.Email = cliente.Email;
             await ValidarInsertCliente(clienteNew);
+            _ApplicationDbContext.Clientes.Update(clienteNew);
+            await _ApplicationDbContext.SaveChangesAsync();
+            return "";
+        }
+        public async Task<string> Delete(Cliente cliente)
+        {
+            var clienteNew = await _ApplicationDbContext.Clientes.FirstOrDefaultAsync(x=>x.Id == cliente.Id);
+            clienteNew.Estado = false;
             _ApplicationDbContext.Clientes.Update(clienteNew);
             await _ApplicationDbContext.SaveChangesAsync();
             return "";

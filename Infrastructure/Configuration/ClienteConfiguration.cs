@@ -24,6 +24,7 @@ namespace Infrastructure.Configuration
             builder.Property(x => x.Domicilio).HasColumnName("Domicilio").HasColumnType("varchar").HasMaxLength(500).IsRequired();
             builder.Property(x => x.Telefono).HasColumnName("TelefonoCelular").HasColumnType("varchar").HasMaxLength(500).IsRequired();
             builder.Property(x => x.Email).HasColumnName("Email").HasColumnType("varchar").HasMaxLength(500).IsRequired();
+            builder.Property(x => x.Estado).HasColumnName("Estado").HasColumnType("bit");
         }
     }
 }
