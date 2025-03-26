@@ -9,8 +9,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
 builder.Services.AddBusinessLayer();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment() || builder.Configuration.GetValue<bool>("Swagger:Enable"))
@@ -25,6 +32,7 @@ if (app.Environment.IsDevelopment() || builder.Configuration.GetValue<bool>("Swa
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseCors("AllowAll"); 
 app.MapControllers();
 
 app.Run();
