@@ -50,12 +50,11 @@ namespace ABM_Clientes.Controllers
             
         }
         [HttpPost("Delete")]
-        public async Task<IActionResult> Delete([FromBody] Cliente cliente)
+        public async Task<IActionResult> Delete(int id)
         {
-
             try
             {
-                return Ok(await _ClienteServiceAsync.Delete(cliente));
+                return Ok(await _ClienteServiceAsync.Delete(id));
             }
             catch (Exception ex)
             {

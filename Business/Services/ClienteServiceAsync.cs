@@ -68,12 +68,16 @@ namespace Business.Services
             await _ApplicationDbContext.SaveChangesAsync();
             return "";
         }
-        public async Task<string> Delete(Cliente cliente)
+        public async Task<string> Delete(int id)
         {
-            var clienteNew = await _ApplicationDbContext.Clientes.FirstOrDefaultAsync(x=>x.Id == cliente.Id);
-            clienteNew.Estado = false;
-            _ApplicationDbContext.Clientes.Update(clienteNew);
-            await _ApplicationDbContext.SaveChangesAsync();
+            var clienteNew = await _ApplicationDbContext.Clientes.FirstOrDefaultAsync(x=>x.Id == id);
+            if(clienteNew != null)
+            {
+                clienteNew.Estado = false;
+                _ApplicationDbContext.Clientes.Update(clienteNew);
+                await _ApplicationDbContext.SaveChangesAsync();
+            }
+
             return "";
         }
 
