@@ -21,8 +21,18 @@ namespace Business.Services
         public async Task<List<Cliente>> ObtenerTodos(string Search = "")
         {
             List<Cliente> clientes = new List<Cliente>();
+            if(string.IsNullOrEmpty(Search.Trim())) clientes = await _ApplicationDbContext.Clientes.ToListAsync();
+            else
+            {
+                clientes = await _ApplicationDbContext.Clientes.Where(x=> x.FechaNacimiento.ToString().Contains(Search) ||
+                x.Nombre.Trim().ToLower().ToString().Contains(Search.ToLower()) ||
+                x.Apellido.Trim().ToLower().ToString().Contains(Search.ToLower()) ||
+                x.Cuit.Trim().ToLower().ToString().Contains(Search.ToLower()) ||
+                x.Email.Trim().ToLower().ToString().Contains(Search.ToLower()) ||
+                x.Domicilio.Trim().ToLower().ToString().Contains(Search.ToLower())
+                ).ToListAsync();
+            }
 
-            clientes = await _ApplicationDbContext.Clientes.ToListAsync();
             return clientes;
         }
         public async Task<Cliente> Obtener(int id)
@@ -98,10 +108,11 @@ namespace Business.Services
                     throw new Exception(string.Join("\n", validations)); 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                if(validations.Count > 0) throw new Exception(string.Join("\n", validations));
+                else throw ex;
 
-                throw;
             }
         }
         #endregion

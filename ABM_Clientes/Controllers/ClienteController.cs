@@ -15,7 +15,7 @@ namespace ABM_Clientes.Controllers
 
         [HttpGet("GetAll")]
         public async Task<List<Cliente>> GetAll(string search="")
-        {
+           {
             return await _ClienteServiceAsync.ObtenerTodos(search);
         }
         [HttpGet("Get")]
@@ -24,14 +24,30 @@ namespace ABM_Clientes.Controllers
             return await _ClienteServiceAsync.Obtener(id);
         }
         [HttpPost("Insert")]
-        public async Task<IActionResult> Insert(Cliente cliente)
+        public async Task<IActionResult> Insert([FromBody]Cliente cliente)
         {
-            return Ok(await _ClienteServiceAsync.Insert(cliente));
+            try
+            {
+                return Ok(await _ClienteServiceAsync.Insert(cliente));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
         [HttpPost("Update")]
-        public async Task<IActionResult> Update(Cliente cliente)
+        public async Task<IActionResult> Update([FromBody] Cliente cliente)
         {
-            return Ok(await _ClienteServiceAsync.Update(cliente));
+
+            try
+            {
+                return Ok(await _ClienteServiceAsync.Update(cliente));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            
         }
     }
 }
