@@ -116,6 +116,10 @@ namespace Business.Services
                 {
                     validations.Add("Debe ingresar su Email...");
                 }
+                if (!cliente.Email.Contains("@"))
+                {
+                    validations.Add("Debe ingresar correctamente el Email...");
+                }
 
                 if (validations.Count > 0)
                 {
